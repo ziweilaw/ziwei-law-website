@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ziwei Law</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Work+Sans:wght@300;400;500;600&family=DM+Mono&display=swap" rel="stylesheet"/>
+<script defer src="/_vercel/insights/script.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#18181a;
+  --ink2:#4a4a50;
+  --ink3:#9a9aa8;
+  --paper:#f5f0eb;
+  --paper2:#ece5da;
+  --sage:#3a5c42;
+  --sage2:#5a8a64;
+  --sage-l:#e8f0ea;
+  --clay:#b85a2a;
+  --clay-l:#f5ece6;
+  --gold:#c8a84b;
+  --serif:'Fraunces',serif;
+  --sans:'Work Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);overflow-x:hidden;cursor:none}
+
+/* ── CURSOR ── */
+#cursor{position:fixed;width:10px;height:10px;background:var(--sage);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,width .2s,height .2s,background .2s}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid var(--sage);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .25s cubic-bezier(.2,.8,.2,1);opacity:.6}
+body:has(a:hover) #cursor,body:has(button:hover) #cursor{width:16px;height:16px;background:var(--clay)}
+body:has(a:hover) #cursor-ring,body:has(button:hover) #cursor-ring{width:52px;height:52px;opacity:.3}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 3rem;height:58px;display:flex;align-items:center;justify-content:space-between;background:rgba(245,240,235,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--paper2)}
+.nav-logo{font-family:var(--serif);font-size:1.05rem;color:var(--ink);text-decoration:none;letter-spacing:.01em}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{font-size:.78rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--sage)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);display:inline-block;margin-right:.5rem;opacity:0;transition:opacity .3s}
+.nav-links a.active .nav-dot{opacity:1}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px 3rem 7rem;max-width:1100px;margin:0 auto;position:relative}
+#hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 72% 25%,rgba(58,92,66,.1) 0%,transparent 55%),radial-gradient(ellipse at 15% 85%,rgba(200,168,75,.07) 0%,transparent 45%);pointer-events:none;z-index:0}
+#hero>*{position:relative;z-index:1}
+.hero-eyebrow{font-size:.72rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s var(--ease-out) both}
+.hero-headline{font-family:var(--serif);font-size:clamp(3.5rem,7vw,6.5rem);line-height:1.05;color:var(--ink);margin-bottom:1.5rem;opacity:0;animation:fadeUp .95s .35s var(--ease-out) both}
+.hero-headline em{font-style:italic;color:var(--sage)}
+.hero-headline .line2{display:block;padding-left:5rem}
+.hero-sub{font-size:1.05rem;color:var(--ink2);max-width:520px;line-height:1.8;margin-bottom:3rem;opacity:0;animation:fadeUp .95s .5s var(--ease-out) both}
+.hero-sub strong{color:var(--ink);font-weight:500}
+.hero-ctas{display:flex;gap:1rem;opacity:0;animation:fadeUp .95s .65s var(--ease-out) both}
+.btn-p{background:var(--sage);color:#fff;padding:13px 32px;border-radius:4px;text-decoration:none;font-size:.88rem;font-weight:500;letter-spacing:.04em;transition:background .2s,transform .15s;display:inline-block}
+.btn-p:hover{background:#2a4230;transform:translateY(-2px)}
+.btn-s{background:transparent;color:var(--ink);padding:13px 32px;border-radius:4px;border:1px solid var(--paper2);text-decoration:none;font-size:.88rem;font-weight:400;transition:border-color .2s,background .2s;display:inline-block}
+.btn-s:hover{border-color:var(--ink3);background:var(--paper2)}
+.hero-scroll{margin-top:auto;padding-top:3rem;display:flex;align-items:center;gap:.75rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);opacity:0;animation:fadeUp .8s 1s var(--ease-out) both}
+.scroll-line{width:40px;height:1px;background:var(--ink3)}
+
+/* ── VALUES ── */
+#values{padding:8rem 3rem;max-width:1100px;margin:0 auto}
+.values-header{display:flex;align-items:baseline;gap:2rem;margin-bottom:5rem}
+.sec-num{font-family:var(--mono);font-size:.7rem;color:var(--ink3);letter-spacing:.08em}
+.sec-title{font-family:var(--serif);font-size:clamp(1.8rem,3vw,2.6rem);color:var(--ink)}
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.value-card{background:#fff;border:1px solid var(--paper2);padding:2.5rem 2rem;cursor:default;transition:background .3s,transform .5s var(--ease-out),box-shadow .3s;position:relative;overflow:hidden;will-change:transform}
+.value-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--sage);transform:scaleX(0);transform-origin:left;transition:transform .4s ease}
+.value-card:hover{background:var(--sage-l);box-shadow:0 12px 32px rgba(58,92,66,.12)}
+.value-card:hover::before{transform:scaleX(1)}
+.value-num{font-family:var(--mono);font-size:.7rem;color:var(--ink3);margin-bottom:1.25rem;letter-spacing:.06em}
+.value-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
+.value-title{font-family:var(--serif);font-size:1.3rem;color:var(--ink);margin-bottom:.75rem}
+.value-desc{font-size:.88rem;color:var(--ink2);line-height:1.75}
+
+/* ── SKILLS ── */
+#skills{background:var(--ink);padding:8rem 3rem;color:var(--paper)}
+#skills .inner{max-width:1100px;margin:0 auto}
+#skills .sec-title{color:var(--paper)}
+#skills .sec-num{color:#555}
+#skills .values-header{border:none;margin-bottom:4rem}
+.skills-orbit{position:relative;width:100%;min-height:480px;display:flex;align-items:center;justify-content:center;margin-bottom:5rem}
+.orbit-center{text-align:center;z-index:2;position:relative}
+.orbit-name{font-family:var(--serif);font-size:2.5rem;color:var(--paper);font-style:italic}
+.orbit-title{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#888;margin-top:.5rem}
+.orbit-ring{position:absolute;border:1px dashed rgba(255,255,255,.1);border-radius:50%;pointer-events:none}
+.orbit-tag{position:absolute;white-space:nowrap;font-size:.8rem;font-weight:400;letter-spacing:.04em;padding:6px 16px;border-radius:20px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.75);background:rgba(255,255,255,.04);transition:all .3s;cursor:default}
+.orbit-tag:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.4);transform:scale(1.05)}
+.skills-bars{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem}
+.skill-bar-item{}
+.skill-bar-label{display:flex;justify-content:space-between;margin-bottom:.5rem;font-size:.82rem;color:rgba(255,255,255,.6)}
+.skill-bar-label span:last-child{color:var(--gold)}
+.skill-bar-track{height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--sage2),var(--gold));border-radius:2px;width:0;transition:width 1.4s var(--ease-out)}
+
+/* ── WORK ── */
+#work{padding:8rem 3rem;max-width:1100px;margin:0 auto}
+.work-intro{font-size:1.1rem;color:var(--ink2);line-height:1.85;max-width:600px;margin-bottom:4rem}
+.work-accordion{}
+.work-item{border-top:1px solid var(--paper2);overflow:hidden}
+.work-item:last-child{border-bottom:1px solid var(--paper2)}
+.work-trigger{width:100%;background:none;border:none;text-align:left;padding:1.75rem 0;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.work-trigger:hover .work-trigger-title{color:var(--sage)}
+.work-trigger-left{display:flex;align-items:center;gap:2rem}
+.work-trigger-tag{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;flex-shrink:0}
+.tag-policy{background:var(--sage-l);color:var(--sage)}
+.tag-media{background:#f0ecf8;color:#6b3fa0}
+.tag-community{background:var(--clay-l);color:var(--clay)}
+.tag-digital{background:#e6f0f8;color:#1d5c96}
+.tag-education{background:#fce8f3;color:#9c4070}
+.work-trigger-title{font-family:var(--serif);font-size:1.2rem;color:var(--ink);transition:color .2s}
+.work-trigger-arrow{font-size:1.2rem;color:var(--ink3);transition:transform .3s;flex-shrink:0}
+.work-item.open .work-trigger-arrow{transform:rotate(45deg)}
+.work-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.work-item.open .work-body{max-height:300px}
+.work-body-inner{padding:0 0 1.75rem;display:grid;grid-template-columns:1fr 2fr;gap:2rem}
+.work-meta{font-family:var(--mono);font-size:.72rem;color:var(--ink3);line-height:2}
+.work-desc{font-size:.92rem;color:var(--ink2);line-height:1.8}
+
+/* ── PROJECTS ── */
+#projects{background:var(--paper2);padding:8rem 3rem}
+#projects .inner{max-width:1100px;margin:0 auto}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.proj-card{background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:1rem;transition:transform .5s var(--ease-out),box-shadow .3s;text-decoration:none;color:inherit;position:relative;overflow:hidden;will-change:transform}
+.proj-card:hover{box-shadow:0 20px 48px rgba(0,0,0,.11)}
+.proj-card-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.proj-tag{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;display:inline-block;width:fit-content}
+.proj-title{font-family:var(--serif);font-size:1.15rem;color:var(--ink)}
+.proj-desc{font-size:.85rem;color:var(--ink2);line-height:1.7;flex:1}
+.proj-foot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-family:var(--mono);color:var(--ink3)}
+.proj-arrow{width:28px;height:28px;border-radius:50%;border:1px solid var(--paper2);display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:.8rem}
+.proj-card:hover .proj-arrow{background:var(--sage);border-color:var(--sage);color:#fff}
+.soon-badge{position:absolute;top:1rem;right:1rem;font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:var(--paper2);border:1px solid #ddd;padding:2px 8px;border-radius:3px}
+button.proj-arrow{background:transparent;cursor:pointer;font-family:inherit;color:inherit}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(24,24,26,.55);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(6px)}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-box{background:var(--paper);border-radius:14px;padding:2.5rem;max-width:420px;width:calc(100% - 3rem);position:relative;transform:translateY(20px) scale(.97);transition:transform .4s var(--ease-out);box-shadow:0 24px 64px rgba(0,0,0,.18)}
+.modal-overlay.open .modal-box{transform:none}
+.modal-close{position:absolute;top:1.1rem;right:1.1rem;background:none;border:none;cursor:pointer;font-size:.85rem;color:var(--ink3);width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+.modal-close:hover{background:var(--paper2);color:var(--ink)}
+.modal-label{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:.9rem;display:block}
+.modal-title{font-family:var(--serif);font-size:1.35rem;color:var(--ink);margin-bottom:.5rem;line-height:1.25}
+.modal-desc{font-size:.84rem;color:var(--ink2);line-height:1.7;margin-bottom:1.75rem}
+.modal-form{display:flex;flex-direction:column;gap:.75rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.form-input{width:100%;padding:.72rem 1rem;border:1.5px solid var(--paper2);border-radius:7px;font-family:var(--sans);font-size:.88rem;color:var(--ink);background:#fff;outline:none;transition:border-color .2s,box-shadow .2s}
+.form-input:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(58,92,66,.1)}
+.form-input::placeholder{color:var(--ink3)}
+.form-submit{background:var(--sage);color:#fff;border:none;padding:.85rem;border-radius:7px;font-family:var(--sans);font-size:.88rem;font-weight:500;cursor:pointer;transition:background .2s,transform .15s;letter-spacing:.03em;margin-top:.25rem}
+.form-submit:hover:not(:disabled){background:#2a4230;transform:translateY(-1px)}
+.form-submit:disabled{opacity:.55;cursor:not-allowed}
+.modal-success{text-align:center;padding:1rem 0}
+.modal-success-icon{font-size:2.2rem;margin-bottom:.85rem}
+.modal-success-title{font-family:var(--serif);font-size:1.15rem;color:var(--ink);margin-bottom:.4rem}
+.modal-success-sub{font-size:.82rem;color:var(--ink2);line-height:1.6}
+
+/* ── POSTS ── */
+#posts{padding:8rem 3rem;max-width:1100px;margin:0 auto}
+.posts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:3rem}
+.post-card{background:#fff;border:1px solid var(--paper2);border-radius:10px;padding:2rem;display:flex;flex-direction:column;gap:.85rem;transition:transform .5s var(--ease-out),box-shadow .3s;position:relative;overflow:hidden;will-change:transform;text-decoration:none;color:inherit}
+.post-card:hover{box-shadow:0 16px 40px rgba(0,0,0,.09)}
+.post-card:hover .proj-arrow{background:var(--sage);border-color:var(--sage);color:#fff}
+.post-card-feature{grid-column:1/-1}
+.post-title{font-family:var(--serif);font-size:1.25rem;color:var(--ink);line-height:1.35}
+.post-excerpt{font-size:.9rem;color:var(--ink2);line-height:1.8;flex:1}
+.post-foot{display:flex;justify-content:space-between;align-items:center;font-size:.72rem;font-family:var(--mono);color:var(--ink3);margin-top:.25rem}
+.post-date{font-family:var(--mono);font-size:.7rem;color:var(--ink3);letter-spacing:.06em}
+.post-header{cursor:pointer;user-select:none}
+.post-toggle{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;color:var(--sage);transition:color .2s;white-space:nowrap}
+.post-expandable.open .post-toggle{color:var(--ink3)}
+.post-body{max-height:0;overflow:hidden;transition:max-height .7s var(--ease-out)}
+.post-expandable.open .post-body{max-height:9000px}
+.post-body-inner{padding:1.75rem 0 .25rem;border-top:1px solid var(--paper2);margin-top:.75rem}
+.post-body-inner p{font-size:.93rem;color:var(--ink2);line-height:1.9;margin-bottom:1.15rem;break-inside:avoid}
+.post-body-inner p:last-child{margin-bottom:0}
+.post-coda{font-family:var(--serif) !important;font-style:italic;color:var(--ink) !important;font-size:1rem !important}
+.post-reply-cta{margin-top:2rem !important;padding-top:1.25rem;border-top:1px solid var(--paper2);font-size:.82rem !important;color:var(--ink3) !important}
+.post-reply-cta a{color:var(--sage);text-decoration:none;border-bottom:1px solid rgba(58,92,66,.3);transition:border-color .2s}
+.post-reply-cta a:hover{border-color:var(--sage)}
+@media(min-width:769px){.post-body-inner{columns:2;column-gap:3rem}}
+
+/* ── CONTACT ── */
+#contact{padding:8rem 3rem;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.contact-headline{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);color:var(--ink);line-height:1.15;margin-bottom:1.5rem}
+.contact-headline em{font-style:italic;color:var(--sage)}
+.contact-note{font-size:.95rem;color:var(--ink2);line-height:1.8;margin-bottom:2.5rem}
+.contact-links{display:flex;flex-direction:column;gap:.75rem}
+.c-link{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;border:1px solid var(--paper2);border-radius:8px;text-decoration:none;color:var(--ink);font-size:.88rem;transition:border-color .2s,background .2s,transform .15s}
+.c-link:hover{border-color:var(--sage);background:var(--sage-l);transform:translateX(4px)}
+.c-icon{width:34px;height:34px;border-radius:6px;background:var(--paper2);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.c-label{font-size:.7rem;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+.c-val{font-size:.88rem;color:var(--ink)}
+.availability{display:flex;align-items:center;gap:.6rem;font-size:.8rem;color:var(--sage);margin-top:1.5rem}
+.avail-dot{width:7px;height:7px;border-radius:50%;background:var(--sage);animation:pulse 2s infinite}
+
+/* ── FOOTER ── */
+footer{background:var(--ink);color:#555;padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.75rem;font-family:var(--mono)}
+footer span{color:#333}
+
+/* ── TYPE CURSOR ── */
+.type-cursor{display:inline-block;width:2px;height:.9em;background:var(--sage);margin-left:2px;vertical-align:middle;animation:blink .85s step-end infinite}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(58,92,66,.4)}70%{box-shadow:0 0 0 8px rgba(58,92,66,0)}}
+@keyframes floatOrbit{from{transform:rotate(var(--start-angle)) translateX(var(--radius)) rotate(calc(-1*var(--start-angle)))}to{transform:rotate(calc(var(--start-angle)+360deg)) translateX(var(--radius)) rotate(calc(-1*(var(--start-angle)+360deg)))}}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s var(--ease-out),transform .75s var(--ease-out)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-blur{opacity:0;filter:blur(12px);transform:translateY(16px);transition:opacity .95s var(--ease-out),filter .95s var(--ease-out),transform .95s var(--ease-out)}
+.reveal-blur.visible{opacity:1;filter:none;transform:none}
+.reveal-left{opacity:0;transform:translateX(-45px);transition:opacity .75s var(--ease-out),transform .75s var(--ease-out)}
+.reveal-left.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:0 1.5rem}
+  #hero,#values,#work,#projects,#contact{padding-left:1.5rem;padding-right:1.5rem}
+  #skills{padding:5rem 1.5rem}
+  .hero-headline .line2{padding-left:2rem}
+  .values-grid{grid-template-columns:1fr}
+  .skills-bars{grid-template-columns:1fr}
+  .work-body-inner{grid-template-columns:1fr}
+  #contact{grid-template-columns:1fr;gap:3rem}
+  .nav-links{display:none}
+  #cursor,#cursor-ring{display:none}
+  body{cursor:auto}
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Ziwei Law</a>
+  <ul class="nav-links">
+    <li><a href="#values"><span class="nav-dot"></span>Values</a></li>
+    <li><a href="#skills"><span class="nav-dot"></span>Skills</a></li>
+    <li><a href="#work"><span class="nav-dot"></span>Work</a></li>
+    <li><a href="#projects"><span class="nav-dot"></span>Projects</a></li>
+    <li><a href="#posts"><span class="nav-dot"></span>Posts</a></li>
+    <li><a href="#contact"><span class="nav-dot"></span>Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Climate Governance · Technology & Data · Communication</div>
+  <h1 class="hero-headline">
+    Ziwei <em>Law</em>
+    <span class="line2">— <span id="typewriter"></span><span class="type-cursor"></span></span>
+  </h1>
+  <p class="hero-sub">
+    Multilingual professional bridging <strong>public policy</strong>, <strong>emerging technology</strong>, and <strong>strategic communication</strong>. MPA Candidate at the University of Victoria.
+  </p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-p">See My Work</a>
+    <a href="#contact" class="btn-s">Get in Touch</a>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span>Scroll to explore</div>
+</section>
+
+<!-- VALUES -->
+<section id="values">
+  <div class="values-header reveal-blur">
+    <span class="sec-num">01</span>
+    <h2 class="sec-title">What drives me</h2>
+  </div>
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <span class="value-icon">🌐</span>
+      <h3 class="value-title">Cross-Cultural Clarity</h3>
+      <p class="value-desc">Fluent in four languages and shaped by newsrooms across continents, I believe the most important skill of our time is translating complexity across cultures — making ideas land, not just transmit.</p>
+    </div>
+    <div class="value-card reveal" style="transition-delay:.1s">
+      <span class="value-icon">🌍</span>
+      <h3 class="value-title">Technology for Resilience</h3>
+      <p class="value-desc">Data and emerging technology become meaningful when they address real crises. I'm drawn to applying digital tools and evidence-based policy to climate governance and disaster risk management — making systems more accountable to those most exposed.</p>
+    </div>
+    <div class="value-card reveal" style="transition-delay:.2s">
+      <span class="value-icon">🤝</span>
+      <h3 class="value-title">Community as Practice</h3>
+      <p class="value-desc">Real change is built with communities, not for them. From health facilitation to curation to newcomer support, I show up where connection matters and roll up my sleeves.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="inner">
+    <div class="values-header reveal">
+      <span class="sec-num" style="color:#555">02</span>
+      <h2 class="sec-title" style="color:var(--paper)">What I bring</h2>
+    </div>
+
+    <!-- Orbit -->
+    <div class="skills-orbit reveal" id="orbit-container">
+      <div class="orbit-ring" style="width:220px;height:220px"></div>
+      <div class="orbit-ring" style="width:360px;height:360px"></div>
+      <div class="orbit-ring" style="width:500px;height:500px"></div>
+      <div class="orbit-center">
+        <div class="orbit-name">Ziwei</div>
+        <div class="orbit-title">MPA · MEd · BA</div>
+      </div>
+    </div>
+
+    <!-- Skill bars -->
+    <div class="skills-bars reveal" id="skill-bars">
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Policy Analysis & Writing</span><span>Expert</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="92"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Multilingual Communication</span><span>Native+</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="97"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>AI Tools & Digital Production</span><span>Advanced</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="82"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Stakeholder & Community Engagement</span><span>Expert</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Research & Knowledge Synthesis</span><span>Advanced</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Project Management & Coordination</span><span>Advanced</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="values-header reveal-blur">
+    <span class="sec-num">03</span>
+    <h2 class="sec-title">Experience</h2>
+  </div>
+  <p class="work-intro reveal-left">Eight years across journalism, diplomacy, education, and community leadership — always in the space where communication shapes outcomes.</p>
+
+  <div class="work-accordion reveal">
+    <div class="work-item">
+      <button class="work-trigger">
+        <div class="work-trigger-left">
+          <span class="work-trigger-tag tag-community">Community</span>
+          <span class="work-trigger-title">Exhibition Coordinator & Curator</span>
+        </div>
+        <span class="work-trigger-arrow">+</span>
+      </button>
+      <div class="work-body">
+        <div class="work-body-inner">
+          <div class="work-meta">2024 – 2025<br>Greater Victoria<br>Volunteer</div>
+          <div class="work-desc">Led a 10-member team to curate a 2-month community exhibition celebrating immigrant mothers' stories. Secured municipal partnership with local government and delivered 50% under budget.</div>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <button class="work-trigger">
+        <div class="work-trigger-left">
+          <span class="work-trigger-tag tag-policy">Policy</span>
+          <span class="work-trigger-title">ESG Media Specialist</span>
+        </div>
+        <span class="work-trigger-arrow">+</span>
+      </button>
+      <div class="work-body">
+        <div class="work-body-inner">
+          <div class="work-meta">2021 – 2022<br>Remote<br>Contract</div>
+          <div class="work-desc">Managed ESG content for a leading social-enterprise forum. Researched global CSR/ESG trends and co-authored articles with European partners on impact investment themes.</div>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <button class="work-trigger">
+        <div class="work-trigger-left">
+          <span class="work-trigger-tag tag-policy">Diplomacy</span>
+          <span class="work-trigger-title">Diplomatic Secretary</span>
+        </div>
+        <span class="work-trigger-arrow">+</span>
+      </button>
+      <div class="work-body">
+        <div class="work-body-inner">
+          <div class="work-meta">2019 – 2021<br>China<br>Full-time</div>
+          <div class="work-desc">Drafted official diplomatic correspondence, managed stakeholder communications, provided interpretation, and facilitated high-level meetings. Reduced response time by 50%.</div>
+        </div>
+      </div>
+    </div>
+    <div class="work-item">
+      <button class="work-trigger">
+        <div class="work-trigger-left">
+          <span class="work-trigger-tag tag-media">Media</span>
+          <span class="work-trigger-title">International News Editor</span>
+        </div>
+        <span class="work-trigger-arrow">+</span>
+      </button>
+      <div class="work-body">
+        <div class="work-body-inner">
+          <div class="work-meta">2016 – 2019<br>Asia<br>Full-time</div>
+          <div class="work-desc">Produced 200+ news pieces for two of the world's most prominent international news agencies. Conducted ambassador interviews and provided interpretation for high-profile delegations.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="inner">
+    <div class="values-header reveal-blur">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Projects</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <div class="proj-card-accent" style="background:#1a7a5e"></div>
+        <span class="proj-tag tag-policy">ESG · Climate</span>
+        <h3 class="proj-title">ESG Leaders Digest</h3>
+        <p class="proj-desc">I track the most important voices in ESG and sustainable cities — Canadian policy makers, climate scientists, impact investors, and urban planners — across podcasts, research blogs, and official government/city websites.</p>
+        <div class="proj-foot"><span>Live</span><button class="proj-arrow" id="esg-subscribe-btn" type="button" style="display:flex;align-items:center;gap:.4rem;width:auto;padding:0 .75rem 0 .6rem;border-radius:20px;font-size:.72rem;letter-spacing:.04em;">↗ <span>click to subscribe</span></button></div>
+      </div>
+      <a href="#" class="proj-card reveal" style="transition-delay:.1s">
+        <div class="proj-card-accent" style="background:var(--sage)"></div>
+        <span class="proj-tag tag-digital">AI · Tool</span>
+        <h3 class="proj-title">Bilingual E-book Generator</h3>
+        <p class="proj-desc">A web app that auto-generates parallel-text bilingual e-books — built to make multilingual reading accessible to learners and cross-cultural communities.</p>
+        <div class="proj-foot"><span>Live</span><span class="proj-arrow">↗</span></div>
+      </a>
+      <a href="#" class="proj-card reveal" style="transition-delay:.1s">
+        <div class="proj-card-accent" style="background:var(--sage2)"></div>
+        <span class="proj-tag tag-digital">AI · Education</span>
+        <h3 class="proj-title">AI Education Landing Page</h3>
+        <p class="proj-desc">Designed and launched an AI-education website with custom domain — making AI literacy approachable for non-technical audiences.</p>
+        <div class="proj-foot"><span>Live</span><span class="proj-arrow">↗</span></div>
+      </a>
+      <a href="#" class="proj-card reveal" style="transition-delay:.2s">
+        <div class="proj-card-accent" style="background:var(--clay)"></div>
+        <span class="proj-tag tag-community">Community</span>
+        <h3 class="proj-title">Moms Story Exhibition</h3>
+        <p class="proj-desc">A 2-month community exhibition celebrating immigrant mothers' stories in Victoria — curated, led, and delivered 50% under budget.</p>
+        <div class="proj-foot"><span>Completed · Aug 2025</span><span class="proj-arrow">↗</span></div>
+      </a>
+      <a href="#" class="proj-card reveal" style="transition-delay:.1s">
+        <span class="soon-badge">Coming Soon</span>
+        <div class="proj-card-accent" style="background:#1d6a96"></div>
+        <span class="proj-tag tag-digital">Climate · Policy</span>
+        <h3 class="proj-title">Climate Policy Brief Series</h3>
+        <p class="proj-desc">Public-facing policy briefs translating complex climate governance for community stakeholders and local government decision-makers.</p>
+        <div class="proj-foot"><span>In Development</span><span class="proj-arrow">↗</span></div>
+      </a>
+      <a href="#" class="proj-card reveal" style="transition-delay:.2s">
+        <span class="soon-badge">Coming Soon</span>
+        <div class="proj-card-accent" style="background:#6b3fa0"></div>
+        <span class="proj-tag tag-community">Community</span>
+        <h3 class="proj-title">Newcomer Resource Network</h3>
+        <p class="proj-desc">A multilingual peer-support guide for newcomers in Greater Victoria — bridging language gaps with culturally responsive navigation tools.</p>
+        <div class="proj-foot"><span>Planning</span><span class="proj-arrow">↗</span></div>
+      </a>
+      <a href="#" class="proj-card reveal" style="transition-delay:.3s">
+        <div class="proj-card-accent" style="background:#c06080"></div>
+        <span class="proj-tag tag-education">Education · Community</span>
+        <h3 class="proj-title">Career Restart Knowledge Hub</h3>
+        <p class="proj-desc">A Notion-based knowledge library built for women in transition — especially stay-at-home moms and young job seekers. Covers personal growth, English learning, and career re-entry strategies. Paired with an active content account on Xiaohongshu.</p>
+        <div class="proj-foot"><span>Live · Xiaohongshu</span><span class="proj-arrow">↗</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section id="posts">
+  <div class="values-header reveal-blur">
+    <span class="sec-num">05</span>
+    <h2 class="sec-title">Posts</h2>
+  </div>
+  <div class="posts-grid" id="posts-grid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <h2 class="contact-headline">Let's build<br>something <em>meaningful.</em></h2>
+    <p class="contact-note">Open to roles in climate governance, disaster risk management, technology policy, communications, and community organizations. I bring cross-cultural depth and a genuine commitment to work that matters.</p>
+    <div class="availability">
+      <span class="avail-dot"></span>
+      Available for opportunities — Langford, BC
+    </div>
+  </div>
+  <div class="contact-links reveal" style="transition-delay:.15s">
+    <a href="mailto:Vienna.ziwei@gmail.com" class="c-link">
+      <div class="c-icon">✉</div>
+      <div><div class="c-label">Email</div><div class="c-val">Vienna.ziwei@gmail.com</div></div>
+    </a>
+    <a href="https://linkedin.com/in/ziweiluo/" target="_blank" class="c-link">
+      <div class="c-icon">in</div>
+      <div><div class="c-label">LinkedIn</div><div class="c-val">linkedin.com/in/ziweiluo</div></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Ziwei Law</span>
+  <span style="color:#444">Langford · BC · Canada</span>
+</footer>
+
+<!-- ESG SUBSCRIBE MODAL -->
+<div id="esg-modal" class="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close-btn" aria-label="Close">✕</button>
+    <span class="modal-label">ESG · Climate</span>
+    <h3 class="modal-title">Subscribe to ESG Leaders Digest</h3>
+    <p class="modal-desc">Get curated updates from the most important voices in ESG and sustainable cities — delivered to your inbox.</p>
+    <form class="modal-form" id="esg-form" novalidate>
+      <div class="form-row">
+        <input class="form-input" type="text" name="firstName" placeholder="First Name" autocomplete="given-name"/>
+        <input class="form-input" type="text" name="lastName" placeholder="Last Name" autocomplete="family-name"/>
+      </div>
+      <input class="form-input" type="email" name="email" placeholder="Email Address" required autocomplete="email"/>
+      <button class="form-submit" type="submit">Subscribe →</button>
+    </form>
+    <div id="esg-success" style="display:none" class="modal-success">
+      <div class="modal-success-icon">🌿</div>
+      <div class="modal-success-title">You're in!</div>
+      <p class="modal-success-sub">Thanks for subscribing. You'll hear from me when the next digest drops.</p>
+    </div>
+  </div>
+</div>
+
+<script src="posts.js"></script>
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+
+/* ── TYPEWRITER ── */
+const phrases=['Communicator.','Policy Thinker.','Climate Advocate.','Community Builder.','Multilingual Professional.','Data for Good.'];
+let pi=0,ci=0,del=false;
+const tw=document.getElementById('typewriter');
+function type(){
+  const w=phrases[pi];
+  if(!del){tw.textContent=w.slice(0,++ci);if(ci===w.length){del=true;setTimeout(type,1800);return}}
+  else{tw.textContent=w.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
+  setTimeout(type,del?55:95);
+}
+setTimeout(type,1200);
+
+/* ── SCROLL REVEAL ── */
+const revObs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);revObs.unobserve(e.target)}});
+},{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.reveal,.reveal-blur,.reveal-left').forEach(el=>revObs.observe(el));
+
+/* ── SKILL BAR ANIMATION ── */
+const barObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-bar-fill').forEach((bar,i)=>{
+        setTimeout(()=>{bar.style.width=bar.dataset.width+'%'},i*120);
+      });
+      barObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+const barsEl=document.getElementById('skill-bars');
+if(barsEl)barObs.observe(barsEl);
+
+/* ── ORBIT TAGS ── */
+const orbitTags=[
+  {label:'Policy Analysis',r:110,speed:28,start:0},
+  {label:'AI & Digital Tools',r:110,speed:28,start:180},
+  {label:'Journalism',r:180,speed:45,start:60},
+  {label:'Diplomacy',r:180,speed:45,start:240},
+  {label:'4 Languages',r:180,speed:45,start:150},
+  {label:'Community Leadership',r:250,speed:65,start:30},
+  {label:'ESG / CSR',r:250,speed:65,start:120},
+  {label:'Stakeholder Engagement',r:250,speed:65,start:210},
+  {label:'Research & Writing',r:250,speed:65,start:300},
+];
+const oc=document.getElementById('orbit-container');
+let orbitStart=null;
+orbitTags.forEach(t=>{
+  const el=document.createElement('div');
+  el.className='orbit-tag';
+  el.textContent=t.label;
+  el.style.setProperty('--radius',t.r+'px');
+  el.style.setProperty('--start-angle',t.start+'deg');
+  el.style.position='absolute';
+  oc.appendChild(el);
+  t.el=el;
+});
+function animOrbit(ts){
+  if(!orbitStart)orbitStart=ts;
+  const elapsed=(ts-orbitStart)/1000;
+  orbitTags.forEach(t=>{
+    const ang=(t.start+elapsed*(360/t.speed))*Math.PI/180;
+    const x=Math.cos(ang)*t.r;
+    const y=Math.sin(ang)*t.r;
+    t.el.style.left=`calc(50% + ${x}px - ${t.el.offsetWidth/2}px)`;
+    t.el.style.top=`calc(50% + ${y}px - 14px)`;
+  });
+  requestAnimationFrame(animOrbit);
+}
+requestAnimationFrame(animOrbit);
+
+/* ── ACCORDION ── */
+document.querySelectorAll('.work-trigger').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.closest('.work-item');
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.work-item.open').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  });
+});
+
+/* ── 3D TILT ── */
+document.querySelectorAll('.value-card,.proj-card,.post-card:not(.post-expandable)').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(700px) rotateY(${x*7}deg) rotateX(${-y*7}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform=''});
+});
+
+/* ── RENDER POSTS ── */
+function renderPosts(){
+  const grid=document.getElementById('posts-grid');
+  if(!grid||typeof POSTS==='undefined')return;
+  POSTS.forEach((post,i)=>{
+    const el=document.createElement('article');
+    if(post.comingSoon){
+      el.className='post-card reveal';
+      el.style.transitionDelay=`${i*0.1}s`;
+      el.innerHTML=`<span class="soon-badge">Coming Soon</span>
+        <span class="proj-tag ${post.tagClass}">${post.tag}</span>
+        <h3 class="post-title">Article coming soon</h3>
+        <p class="post-excerpt">—</p>
+        <div class="post-foot"><span></span><span class="proj-arrow">↗</span></div>`;
+      el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(700px) rotateY(${x*7}deg) rotateX(${-y*7}deg) translateY(-6px)`;});
+      el.addEventListener('mouseleave',()=>{el.style.transform='';});
+    } else {
+      el.className='post-card post-expandable post-card-feature reveal';
+      const body=(post.paragraphs||[]).map(p=>`<p>${p}</p>`).join('');
+      const coda=(post.coda||[]).map(p=>`<p class="post-coda">${p}</p>`).join('');
+      el.innerHTML=`
+        <div class="post-header">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:.75rem">
+            <span class="proj-tag ${post.tagClass}">${post.tag}</span>
+            <span class="post-date">${post.date}</span>
+          </div>
+          <h3 class="post-title">${post.title}</h3>
+          <div class="post-foot" style="margin-top:.85rem"><span></span><span class="post-toggle">Read more ↓</span></div>
+        </div>
+        <p class="post-excerpt">${post.excerpt}</p>
+        <div class="post-body"><div class="post-body-inner">${body}${coda}<p class="post-reply-cta">Have thoughts on this? I'd love to hear from you — <a href="mailto:Vienna.ziwei@gmail.com">reply by email</a> or connect on <a href="https://linkedin.com/in/ziweiluo/" target="_blank">LinkedIn</a>.</p></div></div>`;
+      el.querySelector('.post-header').addEventListener('click',()=>{
+        const isOpen=el.classList.contains('open');
+        el.classList.toggle('open');
+        el.querySelector('.post-toggle').textContent=isOpen?'Read more ↓':'Close ↑';
+      });
+    }
+    grid.appendChild(el);
+    revObs.observe(el);
+  });
+}
+renderPosts();
+
+/* ── ESG SUBSCRIBE MODAL ── */
+(function(){
+  const modal=document.getElementById('esg-modal');
+  const form=document.getElementById('esg-form');
+  const success=document.getElementById('esg-success');
+  const openBtn=document.getElementById('esg-subscribe-btn');
+  const closeBtn=document.getElementById('modal-close-btn');
+
+  function openModal(){modal.classList.add('open');document.body.style.overflow='hidden';}
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow='';
+    setTimeout(()=>{
+      form.reset();form.style.display='';success.style.display='none';
+      const sb=form.querySelector('.form-submit');
+      sb.textContent='Subscribe →';sb.disabled=false;
+    },350);
+  }
+
+  openBtn.addEventListener('click',openModal);
+  closeBtn.addEventListener('click',closeModal);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('open'))closeModal();});
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const sb=form.querySelector('.form-submit');
+    sb.textContent='Subscribing…';sb.disabled=true;
+    try{
+      const res=await fetch('/api/subscribe',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          email:form.email.value,
+          firstName:form.firstName.value,
+          lastName:form.lastName.value
+        })
+      });
+      if(res.ok){
+        form.style.display='none';
+        success.style.display='block';
+        setTimeout(closeModal,3200);
+      } else {
+        sb.textContent='Try again';sb.disabled=false;
+      }
+    } catch(_){sb.textContent='Try again';sb.disabled=false;}
+  });
+})();
+
+/* ── NAV ACTIVE ── */
+const sections=document.querySelectorAll('section[id]');
+const navLinks=document.querySelectorAll('.nav-links a');
+const navObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      navLinks.forEach(a=>{
+        a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id);
+      });
+    }
+  });
+},{threshold:.4});
+sections.forEach(s=>navObs.observe(s));
+</script>
+</body>
+</html>
